@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-os.environ['MUJOCO_GL'] = 'glfw'
+os.environ.setdefault('MUJOCO_GL', 'glfw')
 import hydra
 import numpy as np
 from loguru import logger as logging
@@ -18,8 +18,8 @@ def run(cfg: DictConfig):
     world = swm.World(
         'swm/OGBCube-v0',
         **cfg.world,
-        env_type='single',
-        multiview=True,
+        env_type=cfg.env_type,
+        multiview=cfg.multiview,
         width=224,
         height=224,
         visualize_info=False,
@@ -32,10 +32,14 @@ def run(cfg: DictConfig):
     rng = np.random.default_rng(cfg.seed)
     world.set_policy(ExpertPolicy())
 
+    view_suffix = '_multiview' if cfg.multiview else ''
+    dataset_name = (
+        f'ogbench/cube_{cfg.env_type}{view_suffix}_expert.lance'
+    )
     world.collect(
         Path(cfg.cache_dir or swm.data.utils.get_cache_dir())
         / 'datasets'
-        / 'ogbench/cube_single_multiview_expert.lance',
+        / dataset_name,
         episodes=cfg.num_traj,
         seed=rng.integers(0, 1_000_000).item(),
         options=options,

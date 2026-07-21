@@ -212,6 +212,7 @@ logs/
 **/__pycache__/**
 **/*.pyc
 !scripts/minerl.sh
+!scripts/train/run_ogb_cube_lewm.sh
 
 outputs/
 multirun/

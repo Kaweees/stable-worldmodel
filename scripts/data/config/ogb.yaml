@@ -19,5 +19,7 @@ world:
 num_workers: 4
 seed: 3072
 num_traj: 10000
+env_type: single
+multiview: false
 
 options: null
