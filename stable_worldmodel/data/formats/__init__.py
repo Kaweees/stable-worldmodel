@@ -25,6 +25,8 @@ def _try_import(modname: str) -> None:
 
 
 _try_import('hdf5')
+# OGBench Isaac Lab policy HDF5 (subtrajectory_ids layout); needs h5py.
+_try_import('ogbench_policy')
 _try_import('video')
 # Blob-v2 video format depends on torchcodec + imageio (optional extras).
 _try_import('lance_video')

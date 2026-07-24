@@ -1,0 +1,14 @@
+# OGBench cube trajectories from Isaac Lab policy collection
+# (ogbench_isaaclab train-episodes-40000). Streaming policy HDF5 reader —
+# pixels are raw uint8 CHW; ImageNet normalization is applied in lewm.py.
+dataset:
+  name: /root/ogbench_isaaclab/data/trajectory-generations/train-episodes-40000/train.hdf5
+  format: ogbench_policy
+  # Decision-rate samples already aggregate one action block; frameskip=1.
+  num_steps: ${eval:'${wm.num_preds} + ${wm.history_size}'}
+  frameskip: 1
+  keys_to_load:
+    - pixels
+    - action
+  keys_to_cache:
+    - action

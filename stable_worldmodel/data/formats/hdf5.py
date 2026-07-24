@@ -296,6 +296,19 @@ class HDF5(Format):
     def detect(cls, path) -> bool:
         p = Path(path)
         if p.suffix in ('.h5', '.hdf5'):
+            # Defer OGBench Isaac Lab *policy* HDF5 (subtrajectory_ids, no
+            # ep_len) to the ogbench_policy format.
+            if p.is_file():
+                try:
+                    with h5py.File(p, 'r') as f:
+                        if (
+                            'subtrajectory_ids' in f
+                            and 'ep_len' not in f
+                            and 'actions' in f
+                        ):
+                            return False
+                except OSError:
+                    pass
             return True
         if p.is_dir():
             return any(p.glob('*.h5')) or any(p.glob('*.hdf5'))

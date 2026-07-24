@@ -38,6 +38,14 @@ except ImportError:
     pass
 
 try:
+    from .formats.ogbench_policy import (  # noqa: F401
+        OgbenchPolicyHDF5Dataset,
+        convert_policy_hdf5_to_swm,
+    )
+except ImportError:
+    pass
+
+try:
     from .formats.video import VideoDataset, VideoWriter  # noqa: F401
 except ImportError:
     pass

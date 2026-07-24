@@ -26,7 +26,8 @@ trainer:
   gradient_clip_val: 1.0
 
 loader:
-  batch_size: 128
+  # 512 fits comfortably on high-VRAM GPUs (e.g. ~98GB); was 128 with ~14GB used.
+  batch_size: 512
   num_workers: ${num_workers}
   drop_last: True
   persistent_workers: True
